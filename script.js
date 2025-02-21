@@ -42,36 +42,27 @@ function playAlert(type, name) {
         Swal.fire("Klik tombol untuk memutar suara!");
     });
 
-    // Pastikan suara Bahasa Indonesia dimuat dulu sebelum berbicara
-    window.speechSynthesis.onvoiceschanged = function() {
-        console.log("Muat ulang daftar suara...");
-        speakMessage(message);
+    // Tunggu sampai audio selesai sebelum mulai bicara
+    sirene.onended = function () {
+        console.log("Sirene selesai, mulai suara peringatan...");
+        
+        // Pastikan hanya menggunakan suara Bahasa Indonesia
+        let voices = window.speechSynthesis.getVoices();
+        let indoVoice = voices.find(voice => voice.lang === 'id-ID') || null;
+
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                let speech = new SpeechSynthesisUtterance(message);
+                speech.lang = 'id-ID'; 
+                speech.rate = 0.9;
+                speech.pitch = 1.0;
+                
+                if (indoVoice) {
+                    speech.voice = indoVoice;
+                }
+
+                window.speechSynthesis.speak(speech);
+            }, i * 3000);
+        }
     };
-    
-    // Jika suara sudah tersedia, langsung bicara
-    speakMessage(message);
-}
-
-function speakMessage(message) {
-    let voices = window.speechSynthesis.getVoices();
-    let indoVoice = voices.find(voice => voice.lang === 'id-ID') || null;
-
-    if (!indoVoice) {
-        console.warn("Suara Bahasa Indonesia tidak ditemukan! Gunakan default.");
-    }
-
-    for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-            let speech = new SpeechSynthesisUtterance(message);
-            speech.lang = 'id-ID'; 
-            speech.rate = 0.9;
-            speech.pitch = 1.0;
-            
-            if (indoVoice) {
-                speech.voice = indoVoice;
-            }
-
-            window.speechSynthesis.speak(speech);
-        }, i * 3000);
-    }
 }
