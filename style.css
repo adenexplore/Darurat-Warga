@@ -1,0 +1,62 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    padding: 0;
+    margin: 0;
+}
+
+/* Gambar Warga */
+.logo {
+    width: 150px; /* Ukuran gambar */
+    margin-top: 20px;
+}
+
+h1 {
+    color: red;
+    margin-top: 10px;
+}
+
+.btn-container {
+    margin-top: 20px;
+}
+
+button {
+    display: block;
+    width: 80%; /* Supaya tombol responsif */
+    max-width: 300px; /* Maksimal lebar tombol */
+    padding: 15px;
+    margin: 10px auto;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+/* Copyright */
+footer {
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #ddd;
+    font-size: 14px;
+}
+
+/* Responsif untuk HP */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 24px;
+    }
+    button {
+        font-size: 16px;
+        padding: 12px;
+    }
+    .logo {
+        width: 120px;
+    }
+}
