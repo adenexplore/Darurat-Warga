@@ -46,13 +46,21 @@ function playAlert(type, name) {
     sirene.onended = function () {
         console.log("Sirene selesai, mulai suara peringatan...");
         
-        // Memainkan suara peringatan setelah sirene selesai
+        // Pastikan hanya menggunakan suara Bahasa Indonesia
+        let voices = window.speechSynthesis.getVoices();
+        let indoVoice = voices.find(voice => voice.lang === 'id-ID') || null;
+
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 let speech = new SpeechSynthesisUtterance(message);
-                speech.lang = 'id-ID';
+                speech.lang = 'id-ID'; 
                 speech.rate = 0.9;
                 speech.pitch = 1.0;
+                
+                if (indoVoice) {
+                    speech.voice = indoVoice;
+                }
+
                 window.speechSynthesis.speak(speech);
             }, i * 3000);
         }
